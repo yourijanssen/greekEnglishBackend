@@ -1,4 +1,5 @@
 // index.js
+require('dotenv').config(); 
 const express = require('express');
 const { Pool } = require('pg');
 
@@ -8,13 +9,21 @@ const port = 3000;
 // Middleware to parse JSON
 app.use(express.json());
 
-// Set up the PostgreSQL connection pool
+// Set up the local PostgreSQL connection pool
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'greek_learning_game',
+//   password: 'kees123',
+//   port: 5432, // default postgres port
+// });
+
+// Set up the PostgreSQL connection pool using DATABASE_URL for Neon vercel deployment
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'greek_learning_game',
-  password: 'kees123',
-  port: 5432, // default postgres port
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Neon uses self-signed certs, so this is often recommended
+  },
 });
 
 // Test route
