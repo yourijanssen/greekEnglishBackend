@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Express on Vercel</title>
+  </head>
+  <body>
+    <h1>Welcome to my Express App</h1>
+    <p>Fetching data from the backend...</p>
+    <pre id="data"></pre>
+
+    <script>
+      fetch("/api")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("data").textContent = JSON.stringify(
+            data,
+            null,
+            2
+          );
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          document.getElementById("data").textContent = "Failed to load data.";
+        });
+    </script>
+  </body>
+</html>
